@@ -36,25 +36,24 @@ public class RollCaller {
 
 	private def decorate() {
 		def oneArgConstructor = findOneArgConstructor()
-		TestObject.metaClass.constructor = {
-			->
-			println "constructed with EMPTY string"
-			usedTestObjects.add("")
-			def obj = oneArgConstructor.newInstance("")
-			return obj
-		}
 		TestObject.metaClass.constructor = { String objectId ->
 			println "constructed with ${objectId}"
 			usedTestObjects.add(objectId)
 			def obj = oneArgConstructor.newInstance(objectId)
 			return obj
 		}
-		ObjectRepository.metaClass.'static'.getCapturedTestObjects = { ->
-			return Collections.emptyMap()
-		}
-		ObjectRepository.metaClass.'static'.findTestObject = { String arg, Map params ->
-			println "trying findTestObject(${arg})"
-			return delegate.metaClass.getMetaMethod("findTestObject", arg, params).invoke(delegate, arg, params)
+		ObjectRepository.metaClass.'static'.invokeMethod = { String name, args ->
+			def result = null
+			switch (name) {
+				case 'findTestObject':
+				//println "ObjectRepository.findTestObject(${args}) was called"
+					usedTestObjects.add(args[0])
+					break
+			}
+			if (result == null) {
+				result = delegate.metaClass.getMetaMethod(name, args).invoke(delegate, args)
+			}
+			return result
 		}
 	}
 
@@ -68,8 +67,8 @@ public class RollCaller {
 		}
 		return cnstr
 	}
-	
-	def print() {
-		usedTestObjects.iterator().each { println "${it}" }
+
+	SortedSet<String> getObjectIds() {
+		return new TreeSet(usedTestObjects)
 	}
 }

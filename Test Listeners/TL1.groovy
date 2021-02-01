@@ -15,26 +15,6 @@ class TL1 {
 	static RollCaller rollCaller = new RollCaller()
 	
 	/**
-	 * We will modify behavior of the TestObject class constructor.
-	 * When `new TestObject(objectId)` is invoked, the objectId is
-	 * recorded.
-	 * See https://docs.groovy-lang.org/latest/html/documentation/core-metaprogramming.html#_constructors
-	 * 
-	 * @param testSuiteContext
-	 * @return
-	 */
-	@BeforeTestSuite
-	def beforeTestSuite(TestSuiteContext testSuiteContext) {
-		println "Before ${testSuiteContext.getTestSuiteId()}"
-	}
-	
-	@BeforeTestCase
-	def sampleBeforeTestCase(TestCaseContext testCaseContext) {
-		println "Before ${testCaseContext.getTestCaseId()}"
-	}
-	
-	
-	/**
 	 * We will print the set of objectIds recorded at every
 	 * `new TestObject(objecctId)` invokations.
 	 * 
@@ -43,8 +23,17 @@ class TL1 {
 	 */
 	@AfterTestSuite
 	def afterTestSuite(TestSuiteContext testSuiteContext) {
-		println "After ${testSuiteContext.getTestSuiteId()}"
-		rollCaller.print()
+		SortedSet objectIds = rollCaller.getObjectIds()
+		//
+		StringBuilder sb = new StringBuilder()
+		objectIds.each {
+			sb.append(it)
+			sb.append("\n")
+		}
+		print sb.toString()
+		//
+		File out = new File("used_testobject.txt")
+		out.text = sb.toString()
 	}
-	
+
 }

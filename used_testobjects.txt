@@ -1,0 +1,14 @@
+Object Repository/Page_CURA Healthcare Service/a_Go to Homepage
+Object Repository/Page_CURA Healthcare Service/a_Make Appointment
+Object Repository/Page_CURA Healthcare Service/button_Book Appointment
+Object Repository/Page_CURA Healthcare Service/button_Login
+Object Repository/Page_CURA Healthcare Service/input_Medicaid_programs
+Object Repository/Page_CURA Healthcare Service/input_Password_password
+Object Repository/Page_CURA Healthcare Service/input_Username_username
+Object Repository/Page_CURA Healthcare Service/select_Tokyo CURA Healthcare Center        _5b4107
+Object Repository/Page_CURA Healthcare Service/span_Visit Date (Required)_glyphicon glyphi_cada34
+Object Repository/Page_CURA Healthcare Service/td_22
+Object Repository/Page_CURA Healthcare Service/textarea_Comment_comment
+myTestObject#1
+myTestObject#2
+myTestObject#3
